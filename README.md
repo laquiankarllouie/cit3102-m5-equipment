@@ -1,58 +1,61 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Equipment API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Partners:** Laquian, Karl Louie & Talawec, Yrej Jhel
+**Section:** IT1E
+**Resource:** Equipment (name, category, condition, quantity, location)
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Setup
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/laquiankarllouie/cit3102-m5-equipment.git
+cd cit3102-m5-equipment
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+If `migrate` asks to create the SQLite database file, answer yes.
+The API runs at `http://127.0.0.1:8000/api`.
 
-## Contributing
+## Routes
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Verb | Path | What it does | Token needed? |
+|---|---|---|---|
+| POST | /api/register | Creates a user and returns a token | No |
+| POST | /api/login | Logs in and returns a token | No |
+| POST | /api/logout | Deletes the current token | Yes |
+| GET | /api/me | Shows the logged-in user | Yes |
+| GET | /api/equipment | Lists equipment, with optional filters | Yes |
+| POST | /api/equipment | Creates an equipment record | Yes |
+| GET | /api/equipment/{equipment} | Shows one equipment record | Yes |
+| PUT | /api/equipment/{equipment} | Updates an equipment record | Yes |
+| DELETE | /api/equipment/{equipment} | Deletes an equipment record | Yes |
 
-## Code of Conduct
+## Screenshots
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. POST /api/register (201)
+   ![1](screenshots/1-register.png)
+2. POST /api/login (200)
+   ![2](screenshots/2-login.png)
+3. GET /api/equipment, no token (401)
+   ![3](screenshots/3-list-no-token.png)
+4. GET /api/equipment, with token (200)
+   ![4](screenshots/4-list-token.png)
+5. POST /api/equipment, valid data (201)
+   ![5](screenshots/5-create.png)
+6. POST /api/equipment, missing field (422)
+   ![6](screenshots/6-create-invalid.png)
+7. GET /api/equipment/1 (200)
+   ![7](screenshots/7-show.png)
+8. GET /api/equipment/99999 (404)
+   ![8](screenshots/8-show-missing.png)
+9. PUT /api/equipment/1 (200)
+   ![9](screenshots/9-update.png)
+10. DELETE /api/equipment/1 (204)
+    ![10](screenshots/10-delete.png)
 
-## Security Vulnerabilities
+## Why does DELETE return 204 and not 200?
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## When we delete something, it's already gone, so there's nothing left to send back. That's why DELETE returns 204 and not 200. 204 means "No Content", which tells us the request worked but the response body is empty. A 200 usually comes with data, and a deleted record has no data to show. The status code itself is already the answer, so we don't need to add anything else.
