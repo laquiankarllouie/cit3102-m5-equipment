@@ -1,4 +1,4 @@
-#Project Title: Build Your Own API (cit3102-m5-equipment)
+Project Title: Build Your Own API (cit3102-m5-equipment)
 Partners: Karl Louie Laquian and Yrej Talawec
 Section: IT1E
 Resource: Equipment
