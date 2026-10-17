@@ -35,26 +35,16 @@ The API runs at `http://127.0.0.1:8000/api`.
 
 ## Screenshots
 
-1. POST /api/register (201)
-   ![1](screenshots/1-register.png)
-2. POST /api/login (200)
-   ![2](screenshots/2-login.png)
-3. GET /api/equipment, no token (401)
-   ![3](screenshots/3-list-no-token.png)
-4. GET /api/equipment, with token (200)
-   ![4](screenshots/4-list-token.png)
-5. POST /api/equipment, valid data (201)
-   ![5](screenshots/5-create.png)
-6. POST /api/equipment, missing field (422)
-   ![6](screenshots/6-create-invalid.png)
-7. GET /api/equipment/1 (200)
-   ![7](screenshots/7-show.png)
-8. GET /api/equipment/99999 (404)
-   ![8](screenshots/8-show-missing.png)
-9. PUT /api/equipment/1 (200)
-   ![9](screenshots/9-update.png)
-10. DELETE /api/equipment/1 (204)
-    ![10](screenshots/10-delete.png)
+![1](screenshots/1-register.png)
+![2](screenshots/2-login.png)
+![3](screenshots/3-list-no-token.png)
+![4](screenshots/4-list-token.png)
+![5](screenshots/5-create.png)
+![6](screenshots/6-create-invalid.png)
+![7](screenshots/7-show.png)
+![8](screenshots/8-show-missing.png)
+![9](screenshots/9-update.png)
+![10](screenshots/10-delete.png)
 
 ## Why does DELETE return 204 and not 200?
 
